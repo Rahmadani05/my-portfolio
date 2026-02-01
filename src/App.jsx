@@ -102,7 +102,7 @@ const App = () => {
     {
       name: "Frameworks",
       icon: <Layers size={28} />,
-      items: "Laravel, CodeIgniter, Yii2, Flutter, React.js, Next.js",
+      items: "Laravel, CodeIgniter, Yii2, Flutter, React.js, Next.js, Django",
       color: "text-emerald-600 bg-emerald-100",
     },
     {
