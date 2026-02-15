@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import {
   Github,
   Linkedin,
@@ -19,26 +19,59 @@ import {
   Calendar,
   ChevronLeft,
   ChevronRight,
+  Sun, // Icon Matahari
+  Moon, // Icon Bulan
+  Award as AwardIcon,
 } from "lucide-react";
 
 import fotoProfile from "./bgbg.png";
 import ecommerce from "./preview e-commerce.png";
-import cinemaTicket1 from "./preview bioskop1.png";
-import cinemaTicket2 from "./preview bioskop2.jpg";
-import cinemaTicket3 from "./preview bioskop3.jpg";
-import kinerja1 from "./kinerja1.jpg";
-import kinerja2 from "./kinerja2.jpg";
-import kinerja3 from "./kinerja3.jpg";
-import eprofile from "./eprofile.jpeg"
+import cinemaTicket1 from "./1111.png";
+import kinerja1 from "./kinerja1.png";
+import eprofile from "./eprofile.jpeg";
+import esdm from "./esdm.jpg";
+import untag from "./Untag.jpg";
+import coursenet from "./course net.png";
+import dinkes from "./dinkes.jpg";
+import smk from "./smkn7.png";
 
 const App = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [expandedProjects, setExpandedProjects] = useState({});
+
+  const [isDarkMode, setIsDarkMode] = useState(() => {
+    if (typeof window !== "undefined") {
+      const savedTheme = localStorage.getItem("theme");
+      return savedTheme === "dark";
+    }
+    return false;
+  });
+
+  // Fungsi Toggle Tema
+  const toggleTheme = () => {
+    setIsDarkMode((prev) => {
+      const newTheme = !prev;
+      localStorage.setItem("theme", newTheme ? "dark" : "light");
+      return newTheme;
+    });
+  };
+
   const toggleDesc = (index) => {
     setExpandedProjects((prev) => ({
       ...prev,
-      [index]: !prev[index], // Membalikkan status (buka jadi tutup, tutup jadi buka)
+      [index]: !prev[index],
     }));
+  };
+
+  const scrollRef = useRef(null);
+  const scroll = (direction) => {
+    const { current } = scrollRef;
+    if (current) {
+      current.scrollBy({
+        left: direction === "left" ? -400 : 400,
+        behavior: "smooth",
+      });
+    }
   };
 
   const education = [
@@ -46,17 +79,18 @@ const App = () => {
       degree: "Bachelor of Computer Science - Informatics Engineering",
       school: "Universitas 17 Agustus 1945 Surabaya",
       year: "2022 - 2026",
-      gpa: "",
+      gpa: "GPA: 3.73 / 4.00",
+      logo: untag,
     },
     {
       degree: "Teknik Komputer dan Jaringan",
       school: "SMKN 7 Surabaya",
       year: "2018 - 2021",
-      gpa: "",
+      gpa: "Average Score : 85/100",
+      logo: smk,
     },
   ];
 
-  //Projek
   const projects = [
     {
       title: "E-Commerce",
@@ -72,7 +106,7 @@ const App = () => {
       tech: ["Flutter", "Firebase"],
       link: "https://github.com/Rahmadani05/Aplikasi-Tiket-Bioskop-Flutter",
       color: "from-purple-500 to-pink-500",
-      images: [cinemaTicket1, cinemaTicket2, cinemaTicket3],
+      images: [cinemaTicket1],
     },
     {
       title: "E-Kinerja Mobile App",
@@ -80,7 +114,7 @@ const App = () => {
       tech: ["Flutter", "MySQL"],
       link: "https://github.com/Rahmadani05/E-Kinerja_Mobile",
       color: "from-emerald-500 to-teal-500",
-      images: [kinerja1, kinerja2, kinerja3],
+      images: [kinerja1],
     },
     {
       title: "E-Profile Website",
@@ -92,137 +126,341 @@ const App = () => {
     },
   ];
 
-  const skills = [
+  const experiences = [
     {
-      name: "Languages",
-      icon: <Code2 size={28} />,
-      items: "PHP, Dart, JavaScript, Python",
-      color: "text-blue-600 bg-blue-100",
+      company: "Dinas Kesehatan Provinsi Jawa Timur",
+      role: "Mobile Developer",
+      type: "Internship",
+      period: "Aug 2025 - Oct 2025",
+      location: "Surabaya, Jawa Timur, Indonesia",
+      site: "On-Site",
+      logo: dinkes,
     },
     {
-      name: "Frameworks",
-      icon: <Layers size={28} />,
-      items: "Laravel, CodeIgniter, Yii2, Flutter, React.js, Next.js, Django",
-      color: "text-emerald-600 bg-emerald-100",
+      company: "Dinas Kesehatan Provinsi Jawa Timur",
+      role: "Fullstack Web Developer",
+      type: "Internship",
+      period: "Jan 2025 - Apr 2025",
+      location: "Surabaya, Jawa Timur, Indonesia",
+      site: "On-Site",
+      logo: dinkes,
     },
     {
-      name: "Web Skills",
-      icon: <Globe size={28} />,
-      items: "HTML5, CSS3, RESTful API, Bootstrap",
-      color: "text-cyan-600 bg-cyan-100",
+      company: "Course-Net Indonesia",
+      role: "Cyber Security Specialist (MSIB Bactch 7)",
+      type: "Internship",
+      period: "Sept 2024 - Dec 2024",
+      location: "Surabaya, Jawa Timur, Indonesia",
+      site: "Remote",
+      logo: coursenet,
     },
     {
-      name: "Database",
-      icon: <Database size={28} />,
-      items: "MySQL, PostgreSQL, MongoDB",
-      color: "text-purple-600 bg-purple-100",
+      company: "Universitas 17 Agustus 1945 Surabaya",
+      role: "Laboratory Assistant",
+      type: "Part Time",
+      period: "Sept 2024 - Jan 2026",
+      location: "Surabaya, Jawa Timur, Indonesia",
+      site: "On-Site",
+      logo: untag,
     },
     {
-      name: "Tools",
-      icon: <Wrench size={28} />,
-      items: "Git, GitHub, VS Code, Postman",
-      color: "text-rose-600 bg-rose-100",
-    },
-    {
-      name: "Networking",
-      icon: <Network size={28} />,
-      items: "HTTP/HTTPS, TCP/IP, DNS, Routing & Switching, Mikrotik, Cisco",
-      color: "text-indigo-600 bg-indigo-100",
-    },
-    {
-      name: "DevOps",
-      icon: <Cpu size={28} />,
-      items: "Docker, CI/CD",
-      color: "text-orange-600 bg-orange-100",
-    },
-    {
-      name: "Soft Skills",
-      icon: <Brain size={28} />,
-      items:
-        "Problem Solving, Communication, Teamwork, Critical Thinking, Time Management",
-      color: "text-amber-600 bg-amber-100",
+      company: "Dinas Energi dan Sumber Daya Mineral",
+      role: "Network Engineer",
+      type: "Internship",
+      period: "Jan 2020 - Apr 2020",
+      location: "Surabaya, Jawa Timur, Indonesia",
+      site: "On-Site",
+      logo: esdm,
     },
   ];
 
-  const scrollRef = useRef(null);
-
-  const scroll = (direction) => {
-    const { current } = scrollRef;
-    if (current) {
-      current.scrollBy({
-        left: direction === "left" ? -400 : 400,
-        behavior: "smooth",
-      });
-    }
-  };
+  const skillsData = [
+    {
+      category: "Programming Languages",
+      data: [
+        {
+          name: "PHP",
+          icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/php/php-original.svg",
+        },
+        {
+          name: "JavaScript",
+          icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg",
+        },
+        {
+          name: "Python",
+          icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg",
+        },
+        {
+          name: "Dart",
+          icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/dart/dart-original.svg",
+        },
+        {
+          name: "Java",
+          icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg",
+        },
+      ],
+    },
+    {
+      category: "Frontend Development",
+      data: [
+        {
+          name: "HTML5",
+          icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg",
+        },
+        {
+          name: "CSS3",
+          icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg",
+        },
+        {
+          name: "ReactJS",
+          icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg",
+        },
+        {
+          name: "NextJS",
+          icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg",
+        },
+        {
+          name: "Bootstrap",
+          icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/bootstrap/bootstrap-original.svg",
+        },
+        {
+          name: "Tailwind",
+          icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original.svg",
+        },
+      ],
+    },
+    {
+      category: "Backend Development",
+      data: [
+        {
+          name: "Laravel",
+          icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/laravel/laravel-original.svg",
+        },
+        {
+          name: "CodeIgniter",
+          icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/codeigniter/codeigniter-plain.svg",
+        },
+        {
+          name: "NodeJS",
+          icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg",
+        },
+        {
+          name: "Django",
+          icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/django/django-plain.svg",
+        },
+        {
+          name: "Flask",
+          icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/flask/flask-original.svg",
+        },
+      ],
+    },
+    {
+      category: "Mobile Development",
+      data: [
+        {
+          name: "Flutter",
+          icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/flutter/flutter-original.svg",
+        },
+        {
+          name: "React Native",
+          icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg",
+        },
+      ],
+    },
+    {
+      category: "Database",
+      data: [
+        {
+          name: "MySQL",
+          icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg",
+        },
+        {
+          name: "PostgreSQL",
+          icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg",
+        },
+        {
+          name: "MongoDB",
+          icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg",
+        },
+        {
+          name: "Firebase",
+          icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/firebase/firebase-plain.svg",
+        },
+      ],
+    },
+    {
+      category: "Tools & DevOps",
+      data: [
+        {
+          name: "Git",
+          icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg",
+        },
+        {
+          name: "Docker",
+          icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg",
+        },
+        {
+          name: "VS Code",
+          icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vscode/vscode-original.svg",
+        },
+        {
+          name: "Postman",
+          icon: "https://www.vectorlogo.zone/logos/getpostman/getpostman-icon.svg",
+        },
+        {
+          name: "Vercel",
+          icon: "https://cdn.brandfetch.io/idDpCfN4VD/w/400/h/400/theme/dark/icon.png?c=1bxid64Mup7aczewSAYMX&t=1759982772575",
+        },
+      ],
+    },
+  ];
 
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-900 font-sans selection:bg-indigo-500 selection:text-white relative overflow-x-hidden">
-      {/* Decorartive Background */}
-      <div className="fixed top-0 left-0 w-96 h-96 bg-indigo-500/20 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2 -z-10"></div>
-      <div className="fixed bottom-0 right-0 w-96 h-96 bg-purple-500/20 rounded-full blur-3xl translate-x-1/3 translate-y-1/3 -z-10"></div>
+    <div
+      className={`min-h-screen font-sans selection:bg-indigo-500 selection:text-white relative overflow-x-hidden transition-colors duration-300 ${
+        isDarkMode
+          ? "bg-slate-950 text-slate-100"
+          : "bg-slate-50 text-slate-900"
+      }`}
+    >
+      {/* Decorative Background */}
+      <div
+        className={`fixed top-0 left-0 w-96 h-96 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2 -z-10 transition-colors duration-500 ${
+          isDarkMode ? "bg-indigo-500/10" : "bg-indigo-500/20"
+        }`}
+      ></div>
+      <div
+        className={`fixed bottom-0 right-0 w-96 h-96 rounded-full blur-3xl translate-x-1/3 translate-y-1/3 -z-10 transition-colors duration-500 ${
+          isDarkMode ? "bg-purple-500/10" : "bg-purple-500/20"
+        }`}
+      ></div>
 
-      {/* Navabar */}
-      <nav className="fixed w-full top-0 z-50 transition-all duration-300 bg-white/70 backdrop-blur-lg border-b border-slate-200/50">
+      {/* Navbar */}
+      <nav
+        className={`fixed w-full top-0 z-50 transition-all duration-300 border-b ${
+          isDarkMode
+            ? "bg-slate-950/80 backdrop-blur-lg border-slate-800"
+            : "bg-white/70 backdrop-blur-lg border-slate-200/50"
+        }`}
+      >
         <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-          <a className="text-2xl font-extrabold tracking-tight text-slate-900">
+          <a
+            className={`text-2xl font-extrabold tracking-tight ${isDarkMode ? "text-white" : "text-slate-900"}`}
+          >
             MyPortfolio<span className="text-indigo-600">.</span>
           </a>
 
           {/* Desktop Menu */}
-          <div className="hidden md:flex items-center space-x-8 text-sm font-semibold text-slate-600">
-            {/* Added 'Education' to Menu */}
-            {["About", "Skills", "Projects", "Education"].map((item) => (
-              <a
-                key={item}
-                href={`#${item.toLowerCase()}`}
-                className="hover:text-indigo-600 transition-colors relative group"
-              >
-                {item}
-                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-indigo-600 transition-all group-hover:w-full"></span>
-              </a>
-            ))}
+          <div
+            className={`hidden md:flex items-center space-x-8 text-sm font-semibold ${
+              isDarkMode ? "text-slate-300" : "text-slate-600"
+            }`}
+          >
+            {["About", "Skills", "Projects", "Experience", "Education"].map(
+              (item) => (
+                <a
+                  key={item}
+                  href={`#${item.toLowerCase()}`}
+                  className="hover:text-indigo-600 transition-colors relative group"
+                >
+                  {item}
+                  <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-indigo-600 transition-all group-hover:w-full"></span>
+                </a>
+              ),
+            )}
+
+            {/* Tombol Toggle Theme */}
+            <button
+              onClick={toggleTheme}
+              className={`p-2 rounded-full transition-colors ${
+                isDarkMode
+                  ? "bg-slate-800 text-yellow-400 hover:bg-slate-700"
+                  : "bg-slate-100 text-slate-600 hover:bg-slate-200"
+              }`}
+              title={
+                isDarkMode ? "Switch to Light Mode" : "Switch to Dark Mode"
+              }
+            >
+              {isDarkMode ? <Sun size={20} /> : <Moon size={20} />}
+            </button>
+
             <a
               href="#contact"
-              className="px-5 py-2.5 bg-slate-900 text-white rounded-full hover:bg-slate-800 transition shadow-lg shadow-slate-900/20"
+              className={`px-5 py-2.5 rounded-full transition shadow-lg ${
+                isDarkMode
+                  ? "bg-white text-slate-900 hover:bg-slate-200 shadow-white/10"
+                  : "bg-slate-900 text-white hover:bg-slate-800 shadow-slate-900/20"
+              }`}
             >
               Contact Me
             </a>
           </div>
 
-          {/* Mobile Menu Button */}
-          <button
-            className="md:hidden text-slate-700"
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-          >
-            {isMenuOpen ? <X size={28} /> : <Menu size={28} />}
-          </button>
+          {/* Mobile Menu Button & Toggle */}
+          <div className="md:hidden flex items-center gap-4">
+            <button
+              onClick={toggleTheme}
+              className={`p-2 rounded-full transition-colors ${
+                isDarkMode
+                  ? "bg-slate-800 text-yellow-400"
+                  : "bg-slate-100 text-slate-600"
+              }`}
+            >
+              {isDarkMode ? <Sun size={20} /> : <Moon size={20} />}
+            </button>
+
+            <button
+              className={isDarkMode ? "text-white" : "text-slate-700"}
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+            >
+              {isMenuOpen ? <X size={28} /> : <Menu size={28} />}
+            </button>
+          </div>
         </div>
 
         {/* Mobile Dropdown */}
         {isMenuOpen && (
-          <div className="md:hidden absolute top-full left-0 w-full bg-white border-b border-slate-100 p-6 flex flex-col space-y-4 shadow-xl animate-in slide-in-from-top-5">
-            {["About", "Skills", "Projects", "Education", "Contact"].map(
-              (item) => (
-                <a
-                  key={item}
-                  href={`#${item.toLowerCase()}`}
-                  onClick={() => setIsMenuOpen(false)}
-                  className="text-lg font-medium text-slate-600 hover:text-indigo-600"
-                >
-                  {item}
-                </a>
-              )
-            )}
+          <div
+            className={`md:hidden absolute top-full left-0 w-full border-b p-6 flex flex-col space-y-4 shadow-xl animate-in slide-in-from-top-5 ${
+              isDarkMode
+                ? "bg-slate-900 border-slate-800"
+                : "bg-white border-slate-100"
+            }`}
+          >
+            {[
+              "About",
+              "Skills",
+              "Projects",
+              "Experience",
+              "Education",
+              "Contact",
+            ].map((item) => (
+              <a
+                key={item}
+                href={`#${item.toLowerCase()}`}
+                onClick={() => setIsMenuOpen(false)}
+                className={`text-lg font-medium hover:text-indigo-600 ${
+                  isDarkMode ? "text-slate-300" : "text-slate-600"
+                }`}
+              >
+                {item}
+              </a>
+            ))}
           </div>
         )}
       </nav>
 
-      {/* Section Utama */}
+      {/* Header Section */}
       <section id="about" className="pt-40 pb-20 px-6">
         <div className="max-w-7xl mx-auto flex flex-col-reverse lg:flex-row items-center gap-16">
           <div className="flex-1 text-center lg:text-left space-y-8">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-50 border border-indigo-100 text-indigo-600 text-sm font-bold tracking-wide">
+            <div
+              className={`inline-flex items-center gap-2 px-3 py-1 rounded-full border text-sm font-bold tracking-wide ${
+                isDarkMode
+                  ? "bg-indigo-500/10 border-indigo-500/20 text-indigo-400"
+                  : "bg-indigo-50 border-indigo-100 text-indigo-600"
+              }`}
+            >
               <span className="relative flex h-2 w-2">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-indigo-400 opacity-75"></span>
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-indigo-500"></span>
@@ -230,26 +468,31 @@ const App = () => {
               Available for Hire
             </div>
 
-            <h1 className="text-5xl lg:text-7xl font-extrabold text-slate-900 leading-[1.1] tracking-tight">
+            <h1
+              className={`text-5xl lg:text-7xl font-extrabold leading-[1.1] tracking-tight ${
+                isDarkMode ? "text-white" : "text-slate-900"
+              }`}
+            >
               My Name Is <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-700 to-purple-700">
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-500 to-purple-500">
                 Rahmadani Suryanto Dwi Putra
               </span>
             </h1>
 
-            <p className="text-lg text-slate-600 leading-relaxed max-w-2xl mx-auto lg:mx-0">
-              Undergraduate student at Universitas 17 Agustus 1945 Surabaya
-              specializing in
-              <span className="font-semibold text-indigo-600">
+            <p
+              className={`text-lg leading-relaxed max-w-2xl mx-auto lg:mx-0 ${
+                isDarkMode ? "text-slate-400" : "text-slate-600"
+              }`}
+            >
+              I am a
+              <span className="font-semibold text-indigo-500">
                 {" "}
-                Backend Development
-              </span>{" "}
-              and{" "}
-              <span className="font-semibold text-indigo-600">
-                Computer Networking
+                Fullstack Developer{" "}
               </span>
-              . I am always looking for opportunities to expand my knowledge and
-              apply my skills in practical, real-world projects.
+              based in Surabaya, Indonesia. I am a fresh graduate from
+              Universitas 17 Agustus 1945 Surabaya. I am always looking for
+              opportunities to expand my knowledge and apply my skills in
+              practical, real-world projects.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start pt-4">
@@ -261,24 +504,44 @@ const App = () => {
               </a>
               <a
                 href="#contact"
-                className="px-8 py-4 bg-white border-2 border-slate-200 text-slate-700 rounded-xl font-bold hover:border-slate-300 hover:bg-slate-50 transition flex items-center justify-center"
+                className={`px-8 py-4 border-2 rounded-xl font-bold transition flex items-center justify-center ${
+                  isDarkMode
+                    ? "bg-transparent border-slate-700 text-slate-300 hover:border-slate-500 hover:bg-slate-800"
+                    : "bg-white border-slate-200 text-slate-700 hover:border-slate-300 hover:bg-slate-50"
+                }`}
               >
                 Call Me
               </a>
             </div>
 
-            <div className="pt-8 flex gap-6 justify-center lg:justify-start opacity-70 grayscale hover:grayscale-0 transition-all duration-500">
-              <div className="h-8 w-24 bg-slate-300 rounded animate-pulse"></div>
-              <div className="h-8 w-24 bg-slate-300 rounded animate-pulse"></div>
-              <div className="h-8 w-24 bg-slate-300 rounded animate-pulse"></div>
+            {/* Skeleton loader decoration */}
+            <div
+              className={`pt-8 flex gap-6 justify-center lg:justify-start opacity-70 grayscale hover:grayscale-0 transition-all duration-500`}
+            >
+              {[1, 2, 3].map((i) => (
+                <div
+                  key={i}
+                  className={`h-8 w-24 rounded animate-pulse ${isDarkMode ? "bg-slate-800" : "bg-slate-300"}`}
+                ></div>
+              ))}
             </div>
           </div>
 
           <div className="flex-1 relative">
             <div className="relative w-72 h-72 lg:w-96 lg:h-96 mx-auto">
               <div className="absolute inset-0 bg-gradient-to-tr from-indigo-600 to-purple-600 rounded-[2rem] rotate-6 opacity-20 blur-lg"></div>
-              <div className="absolute inset-0 bg-slate-100 rounded-[2rem] -rotate-6 border-2 border-slate-200"></div>
-              <div className="absolute inset-0 rounded-[2rem] overflow-hidden border-4 border-white shadow-2xl">
+              <div
+                className={`absolute inset-0 rounded-[2rem] -rotate-6 border-2 ${
+                  isDarkMode
+                    ? "bg-slate-800 border-slate-700"
+                    : "bg-slate-100 border-slate-200"
+                }`}
+              ></div>
+              <div
+                className={`absolute inset-0 rounded-[2rem] overflow-hidden border-4 shadow-2xl ${
+                  isDarkMode ? "border-slate-800" : "border-white"
+                }`}
+              >
                 <img
                   src={fotoProfile}
                   alt="Profile"
@@ -291,64 +554,130 @@ const App = () => {
       </section>
 
       {/* Section Skill */}
-      <section id="skills" className="py-24 bg-white relative">
-        <div className="max-w-6xl mx-auto px-6">
+      <section
+        id="skills"
+        className={`py-24 relative ${isDarkMode ? "bg-slate-900" : "bg-white"}`}
+      >
+        <div className="max-w-7xl mx-auto px-6">
           <div className="text-center mb-16">
-            <h3 className="text-3xl md:text-4xl font-extrabold text-slate-900">
-              Skills
+            <h3
+              className={`text-3xl md:text-4xl font-extrabold ${isDarkMode ? "text-white" : "text-slate-900"}`}
+            >
+              Skills & Expertise
             </h3>
+            <p
+              className={`mt-4 ${isDarkMode ? "text-slate-400" : "text-slate-500"}`}
+            >
+              Daftar teknologi dan tools yang saya kuasai
+            </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {skills.map((skill, index) => (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {skillsData.map((category, index) => (
               <div
                 key={index}
-                className="group p-8 bg-slate-50 rounded-2xl border border-slate-100 hover:border-indigo-100 hover:bg-white hover:shadow-xl transition-all duration-300"
+                className={`rounded-2xl p-6 border shadow-xl hover:shadow-2xl transition-all duration-300 ${
+                  isDarkMode
+                    ? "bg-slate-950 border-slate-800 hover:shadow-indigo-500/10"
+                    : "bg-slate-100 border-slate-200 hover:shadow-indigo-500/10"
+                }`}
               >
-                <div
-                  className={`w-14 h-14 ${skill.color} rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform`}
+                {/* Judul Kategori */}
+                <h4
+                  className={`font-bold text-lg mb-6 border-b pb-2 flex items-center gap-2 ${
+                    isDarkMode
+                      ? "text-white border-slate-800"
+                      : "text-slate-800 border-slate-200"
+                  }`}
                 >
-                  {skill.icon}
-                </div>
-                <h4 className="text-xl font-bold text-slate-900 mb-3">
-                  {skill.name}
+                  <span className="w-2 h-6 bg-indigo-500 rounded-full inline-block"></span>
+                  {category.category}
                 </h4>
-                <p className="text-slate-600 leading-relaxed">{skill.items}</p>
+
+                <div className="grid grid-cols-2 gap-3">
+                  {category.data.map((skill, idx) => (
+                    <div
+                      key={idx}
+                      className={`flex items-center gap-3 p-3 rounded-xl border transition-colors group ${
+                        isDarkMode
+                          ? "bg-slate-800/50 border-slate-700 hover:bg-slate-700 hover:border-indigo-500/50"
+                          : "bg-white border-slate-200 hover:border-indigo-400 hover:shadow-md"
+                      }`}
+                    >
+                      {/* Container Icon */}
+                      <div
+                        className={`w-8 h-8 flex items-center justify-center rounded-lg p-1 transition-colors ${
+                          isDarkMode
+                            ? "bg-slate-800 group-hover:bg-white"
+                            : "bg-slate-100 group-hover:bg-indigo-50"
+                        }`}
+                      >
+                        <img
+                          src={skill.icon}
+                          alt={skill.name}
+                          className="w-full h-full object-contain"
+                        />
+                      </div>
+
+                      {/* Nama Skill */}
+                      <span
+                        className={`text-sm font-medium transition-colors ${
+                          isDarkMode
+                            ? "text-slate-300 group-hover:text-white"
+                            : "text-slate-600 group-hover:text-indigo-600"
+                        }`}
+                      >
+                        {skill.name}
+                      </span>
+                    </div>
+                  ))}
+                </div>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Section Project */}
-      <section id="projects" className="py-24 bg-slate-50 overflow-hidden">
+      {/* Project Section */}
+      <section
+        id="projects"
+        className={`py-24 overflow-hidden ${isDarkMode ? "bg-slate-950" : "bg-slate-50"}`}
+      >
         <div className="max-w-7xl mx-auto px-6">
-          {/* Header & Tombol Navigasi */}
           <div className="flex flex-col md:flex-row justify-between items-end mb-12 gap-4">
             <div>
-              <h3 className="text-3xl md:text-4xl font-extrabold text-slate-900">
+              <h3
+                className={`text-3xl md:text-4xl font-extrabold ${isDarkMode ? "text-white" : "text-slate-900"}`}
+              >
                 Project
               </h3>
             </div>
 
-            {/* Tombol Panah Kiri/Kanan */}
             <div className="flex gap-2">
+              {/* Tombol Navigasi Slider */}
               <button
                 onClick={() => scroll("left")}
-                className="p-3 rounded-full bg-white border border-slate-200 text-slate-600 hover:bg-indigo-600 hover:text-white hover:border-indigo-600 transition shadow-sm"
+                className={`p-3 rounded-full border transition shadow-sm ${
+                  isDarkMode
+                    ? "bg-slate-900 border-slate-800 text-slate-300 hover:bg-indigo-600 hover:text-white"
+                    : "bg-white border-slate-200 text-slate-600 hover:bg-indigo-600 hover:text-white"
+                }`}
               >
                 <ChevronLeft size={24} />
               </button>
               <button
                 onClick={() => scroll("right")}
-                className="p-3 rounded-full bg-white border border-slate-200 text-slate-600 hover:bg-indigo-600 hover:text-white hover:border-indigo-600 transition shadow-sm"
+                className={`p-3 rounded-full border transition shadow-sm ${
+                  isDarkMode
+                    ? "bg-slate-900 border-slate-800 text-slate-300 hover:bg-indigo-600 hover:text-white"
+                    : "bg-white border-slate-200 text-slate-600 hover:bg-indigo-600 hover:text-white"
+                }`}
               >
                 <ChevronRight size={24} />
               </button>
             </div>
           </div>
 
-          {/* Container Slider */}
           <div
             ref={scrollRef}
             className="flex gap-8 overflow-x-auto snap-x snap-mandatory pb-12 pt-4 px-4 -mx-4 scroll-smooth hide-scrollbar"
@@ -357,83 +686,113 @@ const App = () => {
             {projects.map((project, index) => (
               <div
                 key={index}
-                className="min-w-[320px] md:min-w-[400px] snap-center group bg-white rounded-2xl overflow-hidden border border-slate-100 shadow-lg hover:shadow-2xl hover:shadow-indigo-500/10 transition-all duration-300 hover:-translate-y-2 flex flex-col"
+                className={`min-w-[320px] md:min-w-[400px] snap-center group rounded-2xl overflow-hidden border shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 flex flex-col ${
+                  isDarkMode
+                    ? "bg-slate-900 border-slate-800 hover:shadow-indigo-500/10"
+                    : "bg-white border-slate-100 hover:shadow-indigo-500/10"
+                }`}
               >
-                {/* Fungsi Gambar */}
-                <div className="h-56 w-full relative overflow-hidden bg-slate-200 group-hover:shadow-md transition-all">
+                {/* Gambar Project */}
+                <div
+                  className={`h-64 w-full relative overflow-hidden border-b ${
+                    isDarkMode
+                      ? "bg-slate-800 border-slate-700"
+                      : "bg-slate-100 border-slate-100"
+                  }`}
+                >
                   {project.images ? (
-                    <div className="flex h-full w-full bg-slate-900 gap-0.5">
+                    <div
+                      className={`flex h-full w-full items-center justify-center gap-1 p-2 ${
+                        isDarkMode ? "bg-slate-950" : "bg-slate-50"
+                      }`}
+                    >
                       {project.images.map((imgSrc, imgIndex) => (
                         <div
                           key={imgIndex}
-                          className="flex-1 h-full overflow-hidden relative"
+                          className="flex-1 h-full relative flex items-center justify-center"
                         >
                           <img
                             src={imgSrc}
-                            alt={`${project.title} screenshot ${imgIndex + 1}`}
-                            className="w-full h-full object-cover object-top"
+                            alt="screenshot"
+                            className="max-w-full max-h-full object-contain"
                           />
-                          <div className="absolute inset-0 bg-black/20 group-hover:bg-black/0 transition"></div>
                         </div>
                       ))}
                     </div>
                   ) : project.image ? (
-                    <>
+                    <div
+                      className={`w-full h-full flex items-center justify-center p-2 ${
+                        isDarkMode ? "bg-slate-950" : "bg-slate-50"
+                      }`}
+                    >
                       <img
                         src={project.image}
                         alt={project.title}
-                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                        className="max-w-full max-h-full object-contain transition-transform duration-500 group-hover:scale-105"
                       />
-                      <div className="absolute inset-0 bg-black/10 group-hover:bg-black/0 transition"></div>
-                    </>
+                    </div>
                   ) : (
                     <div
                       className={`w-full h-full bg-gradient-to-br ${project.color} relative p-6 flex items-center justify-center`}
                     >
-                      <div className="bg-white/20 backdrop-blur-md border border-white/30 p-4 rounded-xl text-white">
-                        <ExternalLink size={32} />
-                      </div>
+                      <ExternalLink size={32} className="text-white" />
                     </div>
                   )}
                 </div>
 
-                {/* Bagian Deskripsi & Tombol */}
+                {/* Deskripsi Project */}
                 <div className="p-8 flex flex-col flex-grow">
-                  <h4 className="text-xl font-bold text-slate-900 mb-3 group-hover:text-indigo-600 transition">
+                  <h4
+                    className={`text-xl font-bold mb-3 transition ${
+                      isDarkMode
+                        ? "text-white group-hover:text-indigo-400"
+                        : "text-slate-900 group-hover:text-indigo-600"
+                    }`}
+                  >
                     {project.title}
                   </h4>
                   <div className="mb-6">
-                    <p 
-                      className={`text-slate-600 leading-relaxed text-sm transition-all duration-300 ${
-                        expandedProjects[index] ? "" : "line-clamp-3"
-                      }`}
+                    <p
+                      className={`leading-relaxed text-sm transition-all duration-300 ${
+                        isDarkMode ? "text-slate-400" : "text-slate-600"
+                      } ${expandedProjects[index] ? "" : "line-clamp-3"}`}
                     >
                       {project.desc}
                     </p>
-                    
                     <button
-                        onClick={() => toggleDesc(index)}
-                        className="mt-2 text-sm font-bold text-indigo-600 hover:text-indigo-800 focus:outline-none hover:underline"
-                      >
-                        {expandedProjects[index] ? "Tutup" : "Selengkapnya..."}
+                      onClick={() => toggleDesc(index)}
+                      className="mt-2 text-sm font-bold text-indigo-500 hover:text-indigo-400 focus:outline-none hover:underline"
+                    >
+                      {expandedProjects[index] ? "Tutup" : "Selengkapnya..."}
                     </button>
                   </div>
+
                   <div className="mt-auto">
                     <div className="flex flex-wrap gap-2 mb-6">
                       {project.tech.map((t, i) => (
-                        <span key={i} className="px-3 py-1 bg-slate-100 text-xs font-bold text-slate-600 rounded-full border border-slate-200">
+                        <span
+                          key={i}
+                          className={`px-3 py-1 text-xs font-bold rounded-full border ${
+                            isDarkMode
+                              ? "bg-slate-800 text-slate-300 border-slate-700"
+                              : "bg-slate-100 text-slate-600 border-slate-200"
+                          }`}
+                        >
                           {t}
                         </span>
                       ))}
                     </div>
-                    
-                    {/* Tombol Link */}
                     {project.link ? (
-                      <a href={project.link} target="_blank" rel="noopener noreferrer" className="inline-flex items-center text-sm font-bold text-indigo-600 hover:text-indigo-800">
+                      <a
+                        href={project.link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center text-sm font-bold text-indigo-500 hover:text-indigo-400"
+                      >
                         Lihat Project <ArrowRight size={16} className="ml-1" />
                       </a>
                     ) : (
-                      <span className="inline-flex items-center text-sm font-bold text-slate-400 cursor-not-allowed">
+                      <span className="inline-flex items-center text-sm font-bold text-slate-500 cursor-not-allowed">
                         Private Project
                       </span>
                     )}
@@ -445,45 +804,223 @@ const App = () => {
         </div>
       </section>
 
-      {/* Section Pendidikan */}
-      <section id="education" className="py-24 bg-white">
-        <div className="max-w-6xl mx-auto px-6">
-          <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-4">
-            <div>
-              <h3 className="text-3xl md:text-4xl font-extrabold text-slate-900">
-                Education
-              </h3>
+      {/* Experience Section */}
+      <section
+        id="experience"
+        className={`py-24 relative overflow-hidden ${isDarkMode ? "bg-slate-950" : "bg-white"}`}
+      >
+        {/* Background Gradients */}
+        {isDarkMode && (
+          <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
+            <div className="absolute top-1/4 left-0 w-96 h-96 bg-indigo-900/20 rounded-full blur-[100px]"></div>
+            <div className="absolute bottom-1/4 right-0 w-96 h-96 bg-purple-900/20 rounded-full blur-[100px]"></div>
+          </div>
+        )}
+
+        <div className="max-w-6xl mx-auto px-6 relative z-10">
+          <div className="text-center mb-16">
+            <h3
+              className={`text-3xl md:text-4xl font-extrabold ${isDarkMode ? "text-white" : "text-slate-900"}`}
+            >
+              Experience
+            </h3>
+            <p
+              className={`mt-4 ${isDarkMode ? "text-slate-400" : "text-slate-500"}`}
+            >
+              Where I've contributed and grown.
+            </p>
+          </div>
+
+          <div className="relative">
+            {/* Garis Vertikal Tengah */}
+            <div
+              className={`absolute left-8 md:left-1/2 top-0 bottom-0 w-0.5 md:-translate-x-1/2 ${
+                isDarkMode
+                  ? "bg-gradient-to-b from-indigo-500 via-purple-500 to-slate-800"
+                  : "bg-gradient-to-b from-indigo-400 via-purple-400 to-slate-200"
+              }`}
+            ></div>
+
+            <div className="space-y-12">
+              {experiences.map((exp, index) => (
+                <div
+                  key={index}
+                  className={`relative flex flex-col md:flex-row gap-8 md:gap-0 items-center ${
+                    index % 2 === 0 ? "md:flex-row-reverse" : ""
+                  }`}
+                >
+                  <div className="hidden md:block w-1/2"></div>
+
+                  {/* Titik Timeline */}
+                  <div
+                    className={`absolute left-8 md:left-1/2 w-4 h-4 border-2 border-indigo-500 rounded-full z-10 md:-translate-x-1/2 shadow-[0_0_15px_rgba(99,102,241,0.6)] ${
+                      isDarkMode ? "bg-slate-950" : "bg-white"
+                    }`}
+                  >
+                    <div className="w-1.5 h-1.5 bg-indigo-400 rounded-full absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"></div>
+                  </div>
+
+                  {/* Konten */}
+                  <div className="w-full md:w-1/2 pl-20 md:pl-0 md:px-10">
+                    <div
+                      className={`flex flex-col gap-4 ${index % 2 === 0 ? "md:items-start md:text-left" : "md:items-end md:text-right"}`}
+                    >
+                      {/* Logo & Judul */}
+                      <div
+                        className={`flex items-center gap-4 ${index % 2 === 0 ? "flex-row" : "md:flex-row-reverse flex-row"}`}
+                      >
+                        <div
+                          className={`w-12 h-12 flex-shrink-0 rounded-lg p-1 flex items-center justify-center shadow-lg border ${
+                            isDarkMode
+                              ? "bg-white border-slate-700"
+                              : "bg-white border-slate-200"
+                          }`}
+                        >
+                          {exp.logo ? (
+                            <img
+                              src={exp.logo}
+                              alt={exp.company}
+                              className="w-full h-full object-contain"
+                            />
+                          ) : (
+                            <div className="text-slate-900 font-bold text-xs text-center">
+                              {exp.company.substring(0, 2).toUpperCase()}
+                            </div>
+                          )}
+                        </div>
+                        <div>
+                          <h4
+                            className={`text-xl font-bold leading-tight ${isDarkMode ? "text-white" : "text-slate-900"}`}
+                          >
+                            {exp.company}
+                          </h4>
+                          <p className="text-indigo-500 text-sm font-medium mt-1">
+                            {exp.type}
+                          </p>
+                        </div>
+                      </div>
+
+                      {/* Card Detail Experience */}
+                      <div
+                        className={`p-6 rounded-2xl border transition-all duration-300 w-full backdrop-blur-sm ${
+                          index % 2 === 0
+                            ? "rounded-tl-none"
+                            : "md:rounded-tr-none rounded-tl-none md:rounded-tl-2xl"
+                        } ${
+                          isDarkMode
+                            ? "bg-slate-900/50 border-slate-800 hover:border-indigo-500/30"
+                            : "bg-slate-100 border-slate-200 hover:border-indigo-300 hover:shadow-md"
+                        }`}
+                      >
+                        <h5
+                          className={`text-lg font-semibold mb-2 ${isDarkMode ? "text-slate-200" : "text-slate-800"}`}
+                        >
+                          {exp.role}
+                        </h5>
+                        <div
+                          className={`flex flex-col gap-1 text-sm ${isDarkMode ? "text-slate-400" : "text-slate-600"} ${index % 2 === 0 ? "" : "md:items-end"}`}
+                        >
+                          <span className="flex items-center gap-2">
+                            <Calendar size={14} className="text-indigo-500" />{" "}
+                            {exp.period}
+                          </span>
+                          <span className="flex items-center gap-2">
+                            <Globe size={14} className="text-indigo-500" />{" "}
+                            {exp.location} • {exp.site}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Education Section */}
+      <section
+        id="education"
+        className={`py-24 ${isDarkMode ? "bg-slate-900" : "bg-white"}`}
+      >
+        <div className="max-w-6xl mx-auto px-6">
+          <div className="mb-16">
+            <h3
+              className={`text-3xl md:text-4xl font-extrabold ${isDarkMode ? "text-white" : "text-slate-900"}`}
+            >
+              Education
+            </h3>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {education.map((edu, index) => (
               <div
                 key={index}
-                className="flex flex-col p-8 bg-slate-50 rounded-2xl border border-slate-100 hover:border-indigo-200 hover:bg-indigo-50/30 transition-all duration-300 group"
+                className={`flex flex-col p-8 rounded-2xl border transition-all duration-300 group ${
+                  isDarkMode
+                    ? "bg-slate-950 border-slate-800 hover:border-indigo-500/50 hover:bg-slate-900"
+                    : "bg-slate-50 border-slate-100 hover:border-indigo-200 hover:bg-indigo-50/30"
+                }`}
               >
-                <div className="flex items-start justify-between mb-4">
-                  <div className="bg-white p-3 rounded-xl shadow-sm text-indigo-600 group-hover:scale-110 transition-transform duration-300">
-                    <GraduationCap size={32} />
+                <div className="flex items-start justify-between mb-6">
+                  {/* LOGO INSTITUSI */}
+                  <div
+                    className={`w-16 h-16 p-2 rounded-2xl shadow-sm flex items-center justify-center transition-transform duration-300 group-hover:scale-110 ${
+                      isDarkMode ? "bg-white" : "bg-white"
+                    }`}
+                  >
+                    {/* Jika ada logo pakai gambar, jika tidak pakai icon default */}
+                    {edu.logo ? (
+                      <img
+                        src={edu.logo}
+                        alt={edu.school}
+                        className="w-full h-full object-contain"
+                      />
+                    ) : (
+                      <GraduationCap size={32} className="text-indigo-600" />
+                    )}
                   </div>
-                  <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-200 text-slate-700 text-xs font-bold">
+
+                  {/* TAHUN */}
+                  <span
+                    className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold ${
+                      isDarkMode
+                        ? "bg-slate-800 text-slate-300"
+                        : "bg-slate-200 text-slate-700"
+                    }`}
+                  >
                     <Calendar size={14} /> {edu.year}
                   </span>
                 </div>
 
-                <h4 className="text-xl font-bold text-slate-900 mb-1">
+                {/* NAMA SEKOLAH & GELAR */}
+                <h4
+                  className={`text-xl font-bold mb-2 ${isDarkMode ? "text-white" : "text-slate-900"}`}
+                >
                   {edu.school}
                 </h4>
-                <p className="text-indigo-600 font-semibold mb-4">
+                <p className="text-indigo-500 font-semibold mb-6 text-sm md:text-base">
                   {edu.degree}
                 </p>
-                <p className="text-slate-600 leading-relaxed mb-4 flex-grow">
-                  {edu.desc}
-                </p>
 
+                {/* GPA / NILAI */}
                 {edu.gpa && (
-                  <div className="mt-auto pt-4 border-t border-slate-200">
-                    <span className="font-bold text-slate-800">{edu.gpa}</span>
+                  <div
+                    className={`mt-auto pt-4 border-t flex items-center gap-2 ${
+                      isDarkMode ? "border-slate-800" : "border-slate-200"
+                    }`}
+                  >
+                    <div
+                      className={`p-1.5 rounded-full ${isDarkMode ? "bg-indigo-500/20 text-indigo-300" : "bg-indigo-50 text-indigo-600"}`}
+                    >
+                      <AwardIcon size={16} />
+                    </div>
+                    <span
+                      className={`font-bold text-sm ${isDarkMode ? "text-slate-200" : "text-slate-800"}`}
+                    >
+                      {edu.gpa}
+                    </span>
                   </div>
                 )}
               </div>
@@ -492,34 +1029,50 @@ const App = () => {
         </div>
       </section>
 
-      {/* Section Kontak */}
-      <section id="contact" className="py-24 bg-white">
+      {/* Contact Section */}
+      <section
+        id="contact"
+        className={`py-24 ${isDarkMode ? "bg-slate-900" : "bg-white"}`}
+      >
         <div className="max-w-4xl mx-auto px-6">
-          <div className="bg-slate-900 rounded-[2.5rem] p-8 md:p-16 text-center relative overflow-hidden shadow-2xl">
-            {/* Background pattern */}
+          <div
+            className={`rounded-[2.5rem] p-8 md:p-16 text-center relative overflow-hidden shadow-2xl transition-colors duration-300 ${
+              isDarkMode
+                ? "bg-slate-950 border border-slate-800"
+                : "bg-slate-100 border border-slate-200"
+            }`}
+          >
+            {/* Background Blobs */}
             <div className="absolute top-0 right-0 -mt-10 -mr-10 w-64 h-64 bg-indigo-500 rounded-full mix-blend-multiply filter blur-3xl opacity-20"></div>
             <div className="absolute bottom-0 left-0 -mb-10 -ml-10 w-64 h-64 bg-purple-500 rounded-full mix-blend-multiply filter blur-3xl opacity-20"></div>
 
-            <p className="text-slate-400 text-lg mb-10 max-w-2xl mx-auto relative z-10">
-              Saya terbuka untuk peluang kerja <i>full-time</i> maupun
+            {/* Text Paragraph */}
+            <p
+              className={`text-lg mb-10 max-w-2xl mx-auto relative z-10 ${
+                isDarkMode ? "text-slate-400" : "text-slate-600"
+              }`}
+            >
+              Saya terbuka untuk peluang kerja <i>full-time</i> maupun{" "}
               <i> freelance</i>. Siap membantu Anda membangun sistem yang aman,
-              efisien, dan dapat diandalkan untuk pertumbuhan bisnis Anda.
+              efisien, dan dapat diandalkan.
             </p>
 
             {/* Container Tombol */}
             <div className="flex flex-col md:flex-row justify-center items-center gap-4 relative z-10">
+              {/* Tombol Email */}
               <a
                 href="mailto:rahmadanisuryanto05@gmail.com"
-                className="w-full md:w-auto px-8 py-4 bg-indigo-600 text-white rounded-xl font-bold hover:bg-indigo-500 transition flex items-center justify-center gap-2"
+                className="w-full md:w-auto px-8 py-4 bg-indigo-600 text-white rounded-xl font-bold hover:bg-indigo-500 transition flex items-center justify-center gap-2 shadow-lg shadow-indigo-500/20"
               >
                 <Mail size={20} /> Kirim Email
               </a>
 
+              {/* Tombol WhatsApp */}
               <a
                 href="https://wa.me/6285804700802"
                 target="_blank"
                 rel="noreferrer"
-                className="w-full md:w-auto px-8 py-4 bg-green-600 text-white rounded-xl font-bold hover:bg-green-500 transition flex items-center justify-center gap-2"
+                className="w-full md:w-auto px-8 py-4 bg-green-600 text-white rounded-xl font-bold hover:bg-green-500 transition flex items-center justify-center gap-2 shadow-lg shadow-green-500/20"
               >
                 <svg
                   viewBox="0 0 24 24"
@@ -533,18 +1086,27 @@ const App = () => {
                 Chat WhatsApp
               </a>
 
+              {/* Social Icons */}
               <div className="flex gap-4 justify-center mt-4 md:mt-0">
                 <a
                   href="https://github.com/Rahmadani05"
-                  className="p-4 bg-white/10 backdrop-blur-sm text-white rounded-xl hover:bg-white/20 transition"
                   target="_blank"
+                  className={`p-4 rounded-xl transition ${
+                    isDarkMode
+                      ? "bg-white/10 backdrop-blur-sm text-white hover:bg-white/20"
+                      : "bg-white text-slate-700 hover:text-indigo-600 shadow-sm border border-slate-200 hover:bg-slate-50"
+                  }`}
                 >
                   <Github size={24} />
                 </a>
                 <a
                   href="https://www.linkedin.com/in/rahmadanisdp"
-                  className="p-4 bg-white/10 backdrop-blur-sm text-white rounded-xl hover:bg-white/20 transition"
                   target="_blank"
+                  className={`p-4 rounded-xl transition ${
+                    isDarkMode
+                      ? "bg-white/10 backdrop-blur-sm text-white hover:bg-white/20"
+                      : "bg-white text-slate-700 hover:text-indigo-600 shadow-sm border border-slate-200 hover:bg-slate-50"
+                  }`}
                 >
                   <Linkedin size={24} />
                 </a>
@@ -555,9 +1117,13 @@ const App = () => {
       </section>
 
       {/* Footer */}
-      <footer className="bg-slate-50 py-12 border-t border-slate-200">
+      <footer
+        className={`py-12 border-t ${isDarkMode ? "bg-slate-950 border-slate-800" : "bg-slate-50 border-slate-200"}`}
+      >
         <div className="max-w-6xl mx-auto px-6 text-center">
-          <p className="text-slate-500 font-medium">
+          <p
+            className={`font-medium ${isDarkMode ? "text-slate-500" : "text-slate-500"}`}
+          >
             © 2026 Rahmadani Suryanto Dwi Putra. Built with React & Tailwind.
           </p>
         </div>
