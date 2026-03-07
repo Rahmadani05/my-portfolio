@@ -36,6 +36,8 @@ import dinkes from "./dinkes.jpg";
 import smk from "./smkn7.png";
 import searchfilm from "./filmsearch1.png";
 import procurement from "./procurement.png";
+import django1 from "./django1.png";
+import tracker from "./Tracker.png";
 
 const App = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -161,6 +163,22 @@ const App = () => {
       link: "https://github.com/Rahmadani05/Backend-System-Procurement-Internal",
       color: "from-yellow-500 to-orange-500",
       image: procurement,
+    },
+    {
+      title: "Django CRUD",
+      desc: "Fullstack project which is collection of projects built on the Django library.",
+      tech: ["Django", "SQLite"],
+      link: "https://github.com/Rahmadani05/Django_CRUD",
+      color: "from-yellow-500 to-orange-500",
+      image: django1,
+    },
+    {
+      title: "Task & Project Tracker",
+      desc: "This application was created to enable users to manage projects and tasks within it, with categories serving as task status markers.",
+      tech: ["Laravel", "Vue.js + TypeScript", "PostgreeSQL"],
+      link: "https://github.com/Rahmadani05/Aplikasi-Task-Project-Tracker",
+      color: "from-yellow-500 to-orange-500",
+      image: tracker,
     },
   ];
 
@@ -672,7 +690,7 @@ const App = () => {
             </div>
 
             <div className="flex gap-2">
-              {/* Tombol Navigasi Slider KIRI */}
+              {/* Tombol Navigasi Slider Kiri */}
               <button
                 onClick={() => scroll("left")}
                 disabled={!canScrollLeft}
@@ -686,7 +704,7 @@ const App = () => {
                 <ChevronLeft size={24} />
               </button>
 
-              {/* Tombol Navigasi Slider KANAN */}
+              {/* Tombol Navigasi Slider Kanan */}
               <button
                 onClick={() => scroll("right")}
                 disabled={!canScrollRight}
@@ -779,8 +797,8 @@ const App = () => {
                       {project.desc}
                     </p>
 
-                    {/* Logika: Muncul jika karakter lebih dari 100 */}
-                    {project.desc.length > 100 && (
+                    {/* Logika: Muncul jika karakter lebih dari 150 */}
+                    {project.desc.length > 150 && (
                       <button
                         onClick={() => toggleDesc(index)}
                         className="mt-2 text-sm font-bold text-indigo-500 hover:text-indigo-400 focus:outline-none hover:underline text-left"
