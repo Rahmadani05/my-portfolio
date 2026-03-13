@@ -29,7 +29,6 @@ import ecommerce from "./preview e-commerce.png";
 import cinemaTicket1 from "./1111.png";
 import kinerja1 from "./kinerja1.png";
 import eprofile from "./eprofile.jpeg";
-import esdm from "./esdm.jpg";
 import untag from "./Untag.jpg";
 import coursenet from "./course net.png";
 import dinkes from "./dinkes.jpg";
@@ -38,6 +37,7 @@ import searchfilm from "./filmsearch1.png";
 import procurement from "./procurement.png";
 import django1 from "./django1.png";
 import tracker from "./Tracker.png";
+import dbklik from "./dbklik.png"
 
 const App = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -184,8 +184,17 @@ const App = () => {
 
   const experiences = [
     {
+      company: "CV DB Klik",
+      role: "Fullstak Web Developer",
+      type: "Internship",
+      period: "Sept 2025 - Dec 2025",
+      location: "Surabaya, Jawa Timur, Indonesia",
+      site: "On-Site",
+      logo: dbklik,
+    },
+    {
       company: "Dinas Kesehatan Provinsi Jawa Timur",
-      role: "Mobile Developer",
+      role: "Front-end Mobile Developer",
       type: "Internship",
       period: "Aug 2025 - Oct 2025",
       location: "Surabaya, Jawa Timur, Indonesia",
@@ -218,15 +227,6 @@ const App = () => {
       location: "Surabaya, Jawa Timur, Indonesia",
       site: "On-Site",
       logo: untag,
-    },
-    {
-      company: "Dinas Energi dan Sumber Daya Mineral",
-      role: "Network Engineer",
-      type: "Internship",
-      period: "Jan 2020 - Apr 2020",
-      location: "Surabaya, Jawa Timur, Indonesia",
-      site: "On-Site",
-      logo: esdm,
     },
   ];
 
@@ -268,12 +268,16 @@ const App = () => {
           icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg",
         },
         {
-          name: "ReactJS",
+          name: "React.Js",
           icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg",
         },
         {
-          name: "NextJS",
+          name: "Next.Js",
           icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg",
+        },
+        {
+          name: "Vue.Js",
+          icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vuejs/vuejs-original.svg",
         },
         {
           name: "Bootstrap",
@@ -399,7 +403,7 @@ const App = () => {
           <a
             className={`text-2xl font-extrabold tracking-tight ${isDarkMode ? "text-white" : "text-slate-900"}`}
           >
-            MyPortfolio<span className="text-indigo-600">.</span>
+            Dani<span className="text-indigo-600"></span>
           </a>
 
           {/* Desktop Menu */}
