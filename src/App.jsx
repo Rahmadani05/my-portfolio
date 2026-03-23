@@ -37,7 +37,8 @@ import searchfilm from "./filmsearch1.png";
 import procurement from "./procurement.png";
 import django1 from "./django1.png";
 import tracker from "./Tracker.png";
-import dbklik from "./dbklik.png"
+import dbklik from "./dbklik.png";
+import leavehub from "./leavehub.png"
 
 const App = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -175,10 +176,18 @@ const App = () => {
     {
       title: "Task & Project Tracker",
       desc: "This application was created to enable users to manage projects and tasks within it, with categories serving as task status markers.",
-      tech: ["Laravel", "Vue.js + TypeScript", "PostgreeSQL"],
+      tech: ["Laravel", "Vue.js", "TypeScript", "PostgreeSQL"],
       link: "https://github.com/Rahmadani05/Aplikasi-Task-Project-Tracker",
       color: "from-yellow-500 to-orange-500",
       image: tracker,
+    },
+    {
+      title: "Leave Request Management",
+      desc: "This app allows employees (users) to submit leave requests, and administrators to approve or deny those requests. The system also automatically manages remaining leave balances",
+      tech: ["Laravel", "Vue.js", "TypeScript", "PostgreeSQL", "Docker"],
+      link: "https://github.com/Rahmadani05/Aplikasi-Leave-Request-Management",
+      color: "from-yellow-500 to-orange-500",
+      image: leavehub,
     },
   ];
 
