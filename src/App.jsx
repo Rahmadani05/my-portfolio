@@ -37,8 +37,8 @@ import searchfilm from "./filmsearch1.png";
 import procurement from "./procurement.png";
 import django1 from "./django1.png";
 import tracker from "./Tracker.png";
-import dbklik from "./dbklik.png";
 import leavehub from "./leavehub.png"
+import energeek from "./energeek.png"
 
 const App = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -142,14 +142,6 @@ const App = () => {
       images: [kinerja1],
     },
     {
-      title: "E-Profile Website",
-      desc: "A database website designed to record, manage, and display a complete list and data of all Community Health Centers in East Java province. It facilitates centralized data retrieval for agencies (Dinas Kesehatan Provinsi Jawa Timur).",
-      tech: ["Laravel", "MySQL"],
-      link: "https://github.com/Rahmadani05/Web_E-Profile",
-      color: "from-yellow-500 to-orange-500",
-      image: eprofile,
-    },
-    {
       title: "React Search Film",
       desc: "Front-End project which is collection of projects built on the React library.",
       tech: ["React.js", "OMDb API"],
@@ -193,28 +185,19 @@ const App = () => {
 
   const experiences = [
     {
-      company: "CV DB Klik",
-      role: "Fullstak Web Developer",
+      company: "Energeek",
+      role: "Fullstak Web Programmer",
       type: "Internship",
-      period: "Sept 2025 - Dec 2025",
+      period: "March 2026 - Now",
       location: "Surabaya, Jawa Timur, Indonesia",
       site: "On-Site",
-      logo: dbklik,
+      logo: energeek,
     },
     {
       company: "Dinas Kesehatan Provinsi Jawa Timur",
       role: "Front-end Mobile Developer",
       type: "Internship",
       period: "Aug 2025 - Oct 2025",
-      location: "Surabaya, Jawa Timur, Indonesia",
-      site: "On-Site",
-      logo: dinkes,
-    },
-    {
-      company: "Dinas Kesehatan Provinsi Jawa Timur",
-      role: "Fullstack Web Developer",
-      type: "Internship",
-      period: "Jan 2025 - Apr 2025",
       location: "Surabaya, Jawa Timur, Indonesia",
       site: "On-Site",
       logo: dinkes,
