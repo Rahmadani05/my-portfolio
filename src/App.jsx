@@ -187,7 +187,7 @@ const App = () => {
     {
       company: "Energeek",
       role: "Fullstak Web Programmer",
-      type: "Internship",
+      type: "Fulltime",
       period: "March 2026 - Now",
       location: "Surabaya, Jawa Timur, Indonesia",
       site: "On-Site",
