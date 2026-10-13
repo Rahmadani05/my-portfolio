@@ -1,4 +1,5 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import {
   Github,
   Linkedin,
@@ -17,32 +18,25 @@ import {
   Brain,
   GraduationCap,
   Calendar,
-  ChevronLeft,
-  ChevronRight,
   Sun, // Icon Matahari
   Moon, // Icon Bulan
   Award as AwardIcon,
+  Download,
 } from "lucide-react";
 
 import fotoProfile from "./bgbg.png";
-import ecommerce from "./preview e-commerce.png";
-import cinemaTicket1 from "./1111.png";
-import kinerja1 from "./kinerja1.png";
 import eprofile from "./eprofile.jpeg";
 import untag from "./Untag.jpg";
 import coursenet from "./course net.png";
 import dinkes from "./dinkes.jpg";
 import smk from "./smkn7.png";
-import searchfilm from "./filmsearch1.png";
-import procurement from "./procurement.png";
-import django1 from "./django1.png";
-import tracker from "./Tracker.png";
-import leavehub from "./leavehub.png"
-import energeek from "./energeek.png"
+import energeek from "./energeek.png";
+
+import { projects } from "./data/projects";
+import { ProjectCard } from "./components/ProjectCard";
 
 const App = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [expandedProjects, setExpandedProjects] = useState({});
 
   const [isDarkMode, setIsDarkMode] = useState(() => {
     if (typeof window !== "undefined") {
@@ -61,44 +55,6 @@ const App = () => {
     });
   };
 
-  const toggleDesc = (index) => {
-    setExpandedProjects((prev) => ({
-      ...prev,
-      [index]: !prev[index],
-    }));
-  };
-
-  const scrollRef = useRef(null);
-  const [canScrollLeft, setCanScrollLeft] = useState(false);
-  const [canScrollRight, setCanScrollRight] = useState(true);
-
-  const scroll = (direction) => {
-    const { current } = scrollRef;
-    if (current) {
-      current.scrollBy({
-        left: direction === "left" ? -400 : 400,
-        behavior: "smooth",
-      });
-      setTimeout(handleScroll, 300);
-    }
-  };
-
-  const handleScroll = () => {
-    if (scrollRef.current) {
-      const { scrollLeft, scrollWidth, clientWidth } = scrollRef.current;
-      setCanScrollLeft(scrollLeft > 0);
-      // Math.ceil digunakan untuk mencegah bug koma/desimal pada beberapa resolusi layar
-      setCanScrollRight(Math.ceil(scrollLeft + clientWidth) < scrollWidth);
-    }
-  };
-
-  // Jalankan pengecekan saat web pertama kali dimuat atau saat ukuran layar diubah
-  useEffect(() => {
-    handleScroll();
-    window.addEventListener("resize", handleScroll);
-    return () => window.removeEventListener("resize", handleScroll);
-  }, []);
-
   const education = [
     {
       degree: "Bachelor of Computer Science - Informatics Engineering",
@@ -116,81 +72,15 @@ const App = () => {
     },
   ];
 
-  const projects = [
-    {
-      title: "E-Commerce",
-      desc: "Built using Laravel and MySQL for robust data management. Integrated with RajaOngkir API for real-time shipping costs and location data, as well as Midtrans API for secure payment processing.",
-      tech: ["Laravel", "MySQL"],
-      link: "https://github.com/Rahmadani05/E-Commerce-Laravel",
-      color: "from-blue-500 to-cyan-500",
-      image: ecommerce,
-    },
-    {
-      title: "Cinema Ticketing Application",
-      desc: "Engineered a high-performance cross-platform cinema ticketing application using Flutter. Seamlessly integrated with TMDB API for real-time movie data and utilized Firebase for secure cloud-based ticket storage and user management, ensuring a modern experience on Android and iOS.",
-      tech: ["Flutter", "Firebase"],
-      link: "https://github.com/Rahmadani05/Aplikasi-Tiket-Bioskop-Flutter",
-      color: "from-purple-500 to-pink-500",
-      images: [cinemaTicket1],
-    },
-    {
-      title: "E-Kinerja Mobile App",
-      desc: "An application designed to monitor daily performance and manage Personal Individual Performance Indicators (IKI). It uses RESTful API architecture for efficient data communication (Dinas Kesehatan Provinsi Jawa Timur).",
-      tech: ["Flutter", "MySQL"],
-      link: "https://github.com/Rahmadani05/E-Kinerja_Mobile",
-      color: "from-emerald-500 to-teal-500",
-      images: [kinerja1],
-    },
-    {
-      title: "React Search Film",
-      desc: "Front-End project which is collection of projects built on the React library.",
-      tech: ["React.js", "OMDb API"],
-      link: "https://github.com/Rahmadani05/React-Movie-Search",
-      color: "from-yellow-500 to-orange-500",
-      image: searchfilm,
-    },
-    {
-      title: "Backend Sistem Procurement Internal",
-      desc: "Internal Procurement System Backend designed to replace manual email-based procurement processes.",
-      tech: ["Laravel", "PostgreeSQL"],
-      link: "https://github.com/Rahmadani05/Backend-System-Procurement-Internal",
-      color: "from-yellow-500 to-orange-500",
-      image: procurement,
-    },
-    {
-      title: "Django CRUD",
-      desc: "Fullstack project which is collection of projects built on the Django library.",
-      tech: ["Django", "SQLite"],
-      link: "https://github.com/Rahmadani05/Django_CRUD",
-      color: "from-yellow-500 to-orange-500",
-      image: django1,
-    },
-    {
-      title: "Task & Project Tracker",
-      desc: "This application was created to enable users to manage projects and tasks within it, with categories serving as task status markers.",
-      tech: ["Laravel", "Vue.js", "TypeScript", "PostgreeSQL"],
-      link: "https://github.com/Rahmadani05/Aplikasi-Task-Project-Tracker",
-      color: "from-yellow-500 to-orange-500",
-      image: tracker,
-    },
-    {
-      title: "Leave Request Management",
-      desc: "This app allows employees (users) to submit leave requests, and administrators to approve or deny those requests. The system also automatically manages remaining leave balances",
-      tech: ["Laravel", "Vue.js", "TypeScript", "PostgreeSQL", "Docker"],
-      link: "https://github.com/Rahmadani05/Aplikasi-Leave-Request-Management",
-      color: "from-yellow-500 to-orange-500",
-      image: leavehub,
-    },
-  ];
 
   const experiences = [
     {
       company: "Energeek",
-      role: "Fullstak Web Programmer",
+      role: "Fullstack Web Programmer",
       type: "Fulltime",
       period: "March 2026 - Now",
       location: "Surabaya, Jawa Timur, Indonesia",
-      site: "On-Site",
+      site: "Hybrid",
       logo: energeek,
     },
     {
@@ -235,6 +125,10 @@ const App = () => {
           icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg",
         },
         {
+          name: "TypeScript",
+          icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg",
+        },
+        {
           name: "Python",
           icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg",
         },
@@ -272,6 +166,14 @@ const App = () => {
           icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vuejs/vuejs-original.svg",
         },
         {
+          name: "TypeScript",
+          icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg",
+        },
+        {
+          name: "jQuery",
+          icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/jquery/jquery-original.svg",
+        },
+        {
           name: "Bootstrap",
           icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/bootstrap/bootstrap-original.svg",
         },
@@ -287,6 +189,10 @@ const App = () => {
         {
           name: "Laravel",
           icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/laravel/laravel-original.svg",
+        },
+        {
+          name: "Lumen",
+          icon: "https://cdn.simpleicons.org/lumen",
         },
         {
           name: "CodeIgniter",
@@ -331,6 +237,10 @@ const App = () => {
           icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg",
         },
         {
+          name: "SQLite",
+          icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/sqlite/sqlite-original.svg",
+        },
+        {
           name: "MongoDB",
           icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg",
         },
@@ -358,6 +268,10 @@ const App = () => {
         {
           name: "Postman",
           icon: "https://www.vectorlogo.zone/logos/getpostman/getpostman-icon.svg",
+        },
+        {
+          name: "Bruno",
+          icon: "https://cdn.simpleicons.org/bruno",
         },
         {
           name: "Vercel",
@@ -526,20 +440,27 @@ const App = () => {
               I am a
               <span className="font-semibold text-indigo-500">
                 {" "}
-                Fullstack Developer{" "}
+                Fullstack Programmer{" "}
               </span>
-              based in Surabaya, Indonesia. I am a fresh graduate from
-              Universitas 17 Agustus 1945 Surabaya. I am always looking for
-              opportunities to expand my knowledge and apply my skills in
-              practical, real-world projects.
+              based in Surabaya, Indonesia. Experienced in engineering robust web applications, scalable backend systems, and modern interactive interfaces. Passionate about clean code, high performance, and transforming complex business requirements into reliable digital solutions.
             </p>
 
-            <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start pt-4">
+            <div className="flex flex-col sm:flex-row flex-wrap gap-4 justify-center lg:justify-start pt-4">
               <a
                 href="#projects"
                 className="px-8 py-4 bg-indigo-600 text-white rounded-xl font-bold hover:bg-indigo-700 transition transform hover:-translate-y-1 shadow-lg shadow-indigo-500/30 flex items-center justify-center gap-2"
               >
                 Portfolio <ArrowRight size={20} />
+              </a>
+              <a
+                href="/cv.pdf"
+                download="CV_Rahmadani_Suryanto.pdf"
+                className={`px-8 py-4 rounded-xl font-bold transition transform hover:-translate-y-1 flex items-center justify-center gap-2 border-2 ${isDarkMode
+                    ? "bg-indigo-500/10 border-indigo-500/30 text-indigo-400 hover:bg-indigo-500/20 hover:border-indigo-500/50"
+                    : "bg-indigo-50 border-indigo-200 text-indigo-600 hover:bg-indigo-100"
+                  }`}
+              >
+                <Download size={20} /> Download CV
               </a>
               <a
                 href="#contact"
@@ -670,172 +591,54 @@ const App = () => {
       </section>
 
       {/* Project Section */}
-      {/* Project Section */}
       <section
         id="projects"
-        className={`py-24 overflow-hidden ${isDarkMode ? "bg-slate-950" : "bg-slate-50"}`}
+        className={`py-24 ${isDarkMode ? "bg-slate-950" : "bg-slate-50"}`}
       >
         <div className="max-w-7xl mx-auto px-6">
-          <div className="flex flex-col md:flex-row justify-between items-end mb-12 gap-4">
+          <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-12 gap-4">
             <div>
               <h3
-                className={`text-3xl md:text-4xl font-extrabold ${isDarkMode ? "text-white" : "text-slate-900"}`}
+                className={`text-3xl md:text-4xl font-extrabold ${
+                  isDarkMode ? "text-white" : "text-slate-900"
+                }`}
               >
                 Project
               </h3>
-            </div>
-
-            <div className="flex gap-2">
-              {/* Tombol Navigasi Slider Kiri */}
-              <button
-                onClick={() => scroll("left")}
-                disabled={!canScrollLeft}
-                className={`p-3 rounded-full border transition shadow-sm ${!canScrollLeft
-                    ? "opacity-30 cursor-not-allowed " + (isDarkMode ? "bg-slate-900 border-slate-800 text-slate-500" : "bg-white border-slate-200 text-slate-400")
-                    : isDarkMode
-                      ? "bg-slate-900 border-slate-800 text-slate-300 hover:bg-indigo-600 hover:text-white"
-                      : "bg-white border-slate-200 text-slate-600 hover:bg-indigo-600 hover:text-white"
-                  }`}
+              <p
+                className={`mt-2 text-sm md:text-base ${
+                  isDarkMode ? "text-slate-400" : "text-slate-600"
+                }`}
               >
-                <ChevronLeft size={24} />
-              </button>
-
-              {/* Tombol Navigasi Slider Kanan */}
-              <button
-                onClick={() => scroll("right")}
-                disabled={!canScrollRight}
-                className={`p-3 rounded-full border transition shadow-sm ${!canScrollRight
-                    ? "opacity-30 cursor-not-allowed " + (isDarkMode ? "bg-slate-900 border-slate-800 text-slate-500" : "bg-white border-slate-200 text-slate-400")
-                    : isDarkMode
-                      ? "bg-slate-900 border-slate-800 text-slate-300 hover:bg-indigo-600 hover:text-white"
-                      : "bg-white border-slate-200 text-slate-600 hover:bg-indigo-600 hover:text-white"
-                  }`}
-              >
-                <ChevronRight size={24} />
-              </button>
+                Kumpulan proyek enterprise skala instansi dan aplikasi unggulan pilihan.
+              </p>
             </div>
           </div>
 
-          <div
-            ref={scrollRef}
-            onScroll={handleScroll} // <-- Tambahkan Event Listener ini
-            className="flex gap-8 overflow-x-auto snap-x snap-mandatory pb-12 pt-4 px-4 -mx-4 scroll-smooth hide-scrollbar"
-            style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
-          >
-            {projects.map((project, index) => (
-              <div
-                key={index}
-                className={`min-w-[320px] md:min-w-[400px] snap-center group rounded-2xl overflow-hidden border shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 flex flex-col ${isDarkMode
-                    ? "bg-slate-900 border-slate-800 hover:shadow-indigo-500/10"
-                    : "bg-white border-slate-100 hover:shadow-indigo-500/10"
-                  }`}
-              >
-                {/* Gambar Project */}
-                <div
-                  className={`h-64 w-full relative overflow-hidden border-b flex-shrink-0 ${isDarkMode
-                      ? "bg-slate-800 border-slate-700"
-                      : "bg-slate-100 border-slate-100"
-                    }`}
-                >
-                  {project.images ? (
-                    <div
-                      className={`flex h-full w-full items-center justify-center gap-1 p-2 ${isDarkMode ? "bg-slate-950" : "bg-slate-50"
-                        }`}
-                    >
-                      {project.images.map((imgSrc, imgIndex) => (
-                        <div
-                          key={imgIndex}
-                          className="flex-1 h-full relative flex items-center justify-center"
-                        >
-                          <img
-                            src={imgSrc}
-                            alt="screenshot"
-                            className="max-w-full max-h-full object-contain"
-                          />
-                        </div>
-                      ))}
-                    </div>
-                  ) : project.image ? (
-                    <div
-                      className={`w-full h-full flex items-center justify-center p-2 ${isDarkMode ? "bg-slate-950" : "bg-slate-50"
-                        }`}
-                    >
-                      <img
-                        src={project.image}
-                        alt={project.title}
-                        className="max-w-full max-h-full object-contain transition-transform duration-500 group-hover:scale-105"
-                      />
-                    </div>
-                  ) : (
-                    <div
-                      className={`w-full h-full bg-gradient-to-br ${project.color} relative p-6 flex items-center justify-center`}
-                    >
-                      <ExternalLink size={32} className="text-white" />
-                    </div>
-                  )}
-                </div>
-
-                {/* Deskripsi Project */}
-                <div className="p-8 flex flex-col flex-grow">
-                  <h4
-                    className={`text-xl font-bold mb-3 transition ${isDarkMode
-                        ? "text-white group-hover:text-indigo-400"
-                        : "text-slate-900 group-hover:text-indigo-600"
-                      }`}
-                  >
-                    {project.title}
-                  </h4>
-                  <div className="mb-6">
-                    <p
-                      className={`leading-relaxed text-sm transition-all duration-300 ${isDarkMode ? "text-slate-400" : "text-slate-600"
-                        } ${expandedProjects[index] ? "" : "line-clamp-3"}`}
-                    >
-                      {project.desc}
-                    </p>
-
-                    {/* Logika: Muncul jika karakter lebih dari 150 */}
-                    {project.desc.length > 150 && (
-                      <button
-                        onClick={() => toggleDesc(index)}
-                        className="mt-2 text-sm font-bold text-indigo-500 hover:text-indigo-400 focus:outline-none hover:underline text-left"
-                      >
-                        {expandedProjects[index] ? "Tutup" : "Selengkapnya..."}
-                      </button>
-                    )}
-                  </div>
-
-                  <div className="mt-auto">
-                    <div className="flex flex-wrap gap-2 mb-6">
-                      {project.tech.map((t, i) => (
-                        <span
-                          key={i}
-                          className={`px-3 py-1 text-xs font-bold rounded-full border ${isDarkMode
-                              ? "bg-slate-800 text-slate-300 border-slate-700"
-                              : "bg-slate-100 text-slate-600 border-slate-200"
-                            }`}
-                        >
-                          {t}
-                        </span>
-                      ))}
-                    </div>
-                    {project.link ? (
-                      <a
-                        href={project.link}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center text-sm font-bold text-indigo-500 hover:text-indigo-400"
-                      >
-                        Lihat Project <ArrowRight size={16} className="ml-1" />
-                      </a>
-                    ) : (
-                      <span className="inline-flex items-center text-sm font-bold text-slate-500 cursor-not-allowed">
-                        Private Project
-                      </span>
-                    )}
-                  </div>
-                </div>
-              </div>
+          {/* Grid 2 Baris x 3 Kolom (6 Project) */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {projects.slice(0, 6).map((project, index) => (
+              <ProjectCard
+                key={project.id || index}
+                project={project}
+                isDarkMode={isDarkMode}
+              />
             ))}
+          </div>
+
+          {/* Tombol Selengkapnya ke Route /all-project */}
+          <div className="flex justify-center mt-12">
+            <Link
+              to="/all-project"
+              className={`inline-flex items-center gap-2.5 px-8 py-3.5 rounded-full font-bold text-sm transition-all duration-300 shadow-lg hover:shadow-2xl hover:-translate-y-1 active:translate-y-0 cursor-pointer ${
+                isDarkMode
+                  ? "bg-indigo-600 hover:bg-indigo-500 text-white shadow-indigo-600/30"
+                  : "bg-indigo-600 hover:bg-indigo-700 text-white shadow-indigo-600/25"
+              }`}
+            >
+              <span>Selengkapnya</span>
+              <ArrowRight size={18} />
+            </Link>
           </div>
         </div>
       </section>

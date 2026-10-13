@@ -1,0 +1,152 @@
+import ecommerce from "../preview e-commerce.png";
+import cinemaTicket1 from "../1111.png";
+import kinerja1 from "../kinerja1.png";
+import searchfilm from "../filmsearch1.png";
+import procurement from "../procurement.png";
+import django1 from "../django1.png";
+import tracker from "../Tracker.png";
+import leavehub from "../leavehub.png";
+import energeek from "../energeek.png";
+import nadi from "../nadi.png";
+import poskoLogo from "../logo-login.svg";
+import dwpMain from "../dwp-main.png";
+import permata2 from "../permata2.svg";
+import sikapBijak from "../sikap-bijak.png";
+
+export const projects = [
+  {
+    id: "sikap-bijak",
+    category: "enterprise",
+    title: "SIKAP BIJAK - aplikaSI pereKAPan pembuatan BuktI paJAK",
+    desc: "An administrative and reporting information system for generating income tax withholding certificates within the General Affairs Division of the Surabaya City Government. It supports automated tax calculation validation, audit trail monitoring of SPJ files, integration with Google Authenticator 2FA, multi-period data summarization, and the export of standardized tax reports (Excel/PDF).",
+    tech: ["Laravel 12", "Vue 3", "TypeScript", "PostgreSQL", "Pinia", "RESTful API", "2FA Auth", "DataTables"],
+    link: "",
+    color: "from-rose-600 to-red-600",
+    image: sikapBijak,
+    isLogo: true,
+  },
+  {
+    id: "nadi-dinkop",
+    category: "enterprise",
+    title: "Dinkop UMKM (NADI) - Dashboard & Admin Panel",
+    desc: "Enterprise monitoring and data aggregation platform for the Department of Cooperatives and MSMEs (DinkopUMDAG). Features real-time market distribution dashboards, stand occupancy metrics, daily revenue analysis, and intervention tracking. Equipped with an Admin Panel featuring 2FA authentication, role-based access control (RBAC), and geospatial merchant profiling.",
+    tech: ["Laravel 12", "Vue 3", "TypeScript", "PostgreSQL", "Pinia", "RESTful API", "2FA Auth", "ApexCharts"],
+    link: "",
+    color: "from-blue-600 to-cyan-600",
+    image: nadi,
+    isLogo: true,
+  },
+  {
+    id: "posko-bojonegoro",
+    category: "enterprise",
+    title: "Posko PU Bojonegoro - Maintenance & Inventory",
+    desc: "Integrated logistics, spare part inventory, and heavy equipment maintenance platform for Dinas PU Bojonegoro. Developed responsive web frontend and multi-platform RESTful backend serving web and mobile technician workflows, including serial number tracking, real-time stock reconciliation, incoming goods, and preventive maintenance (PM) realization.",
+    tech: ["Lumen", "Laravel 6", "PostgreSQL", "SQLite", "Vue.js", "jQuery", "Bootstrap", "RESTful API", "JWT Auth"],
+    link: "",
+    color: "from-amber-600 to-orange-600",
+    image: poskoLogo,
+    isLogo: true,
+  },
+  {
+    id: "ess-dwp",
+    category: "enterprise",
+    title: "ESS-DWP Surabaya (Employee Self-Service)",
+    desc: "Employee Self-Service (ESS) and human resource management platform for Dharma Wanita Persatuan (DWP) Surabaya. Developed the web frontend and centralized RESTful API for web and mobile devices, featuring Google Maps GPS-based attendance check-in/out, shift rotation scheduling, employee turnover analytics, and secure JWT authentication.",
+    tech: ["Laravel 8", "PostgreSQL", "JWT Auth", "Blade", "jQuery", "Google Maps API", "RESTful API", "DataTables"],
+    link: "",
+    color: "from-emerald-600 to-teal-600",
+    image: dwpMain,
+    isLogo: true,
+  },
+  {
+    id: "bank-data",
+    category: "enterprise",
+    title: "Bank Data (SI OM EKSIS)",
+    desc: "Centralized data repository and financial analytics platform designed for regional economic surveillance and inflation monitoring. Responsible for fullstack engineering including interactive frontend dashboard interfaces and robust backend RESTful APIs for financial data recapitulation, detail tracking, and macroeconomic trend visualization.",
+    tech: ["Laravel 5.5", "PostgreSQL", "Vue.js", "jQuery", "JWT Auth", "RESTful API", "DataTables"],
+    link: "",
+    color: "from-indigo-600 to-purple-600",
+    image: permata2,
+    isLogo: true,
+  },
+  {
+    id: "ecommerce",
+    category: "personal",
+    title: "E-Commerce",
+    desc: "Built using Laravel and MySQL for robust data management. Integrated with RajaOngkir API for real-time shipping costs and location data, as well as Midtrans API for secure payment processing.",
+    tech: ["Laravel", "MySQL"],
+    link: "https://github.com/Rahmadani05/E-Commerce-Laravel",
+    color: "from-blue-500 to-cyan-500",
+    image: ecommerce,
+  },
+  {
+    id: "cinema-ticketing",
+    category: "personal",
+    title: "Cinema Ticketing Application",
+    desc: "Engineered a high-performance cross-platform cinema ticketing application using Flutter. Seamlessly integrated with TMDB API for real-time movie data and utilized Firebase for secure cloud-based ticket storage and user management, ensuring a modern experience on Android and iOS.",
+    tech: ["Flutter", "Firebase"],
+    link: "https://github.com/Rahmadani05/Aplikasi-Tiket-Bioskop-Flutter",
+    color: "from-purple-500 to-pink-500",
+    images: [cinemaTicket1],
+  },
+  {
+    id: "ekinerja-mobile",
+    category: "personal",
+    title: "E-Kinerja Mobile App",
+    desc: "An application designed to monitor daily performance and manage Personal Individual Performance Indicators (IKI). It uses RESTful API architecture for efficient data communication (Dinas Kesehatan Provinsi Jawa Timur).",
+    tech: ["Flutter", "MySQL"],
+    link: "https://github.com/Rahmadani05/E-Kinerja_Mobile",
+    color: "from-emerald-500 to-teal-500",
+    images: [kinerja1],
+  },
+  {
+    id: "react-search-film",
+    category: "personal",
+    title: "React Search Film",
+    desc: "Front-End project which is collection of projects built on the React library.",
+    tech: ["React.js", "OMDb API"],
+    link: "https://github.com/Rahmadani05/React-Movie-Search",
+    color: "from-yellow-500 to-orange-500",
+    image: searchfilm,
+  },
+  {
+    id: "backend-procurement",
+    category: "personal",
+    title: "Backend Sistem Procurement Internal",
+    desc: "Internal Procurement System Backend designed to replace manual email-based procurement processes.",
+    tech: ["Laravel", "PostgreSQL"],
+    link: "https://github.com/Rahmadani05/Backend-System-Procurement-Internal",
+    color: "from-yellow-500 to-orange-500",
+    image: procurement,
+  },
+  {
+    id: "django-crud",
+    category: "personal",
+    title: "Django CRUD",
+    desc: "Fullstack project which is collection of projects built on the Django library.",
+    tech: ["Django", "SQLite"],
+    link: "https://github.com/Rahmadani05/Django_CRUD",
+    color: "from-yellow-500 to-orange-500",
+    image: django1,
+  },
+  {
+    id: "task-tracker",
+    category: "personal",
+    title: "Task & Project Tracker",
+    desc: "This application was created to enable users to manage projects and tasks within it, with categories serving as task status markers.",
+    tech: ["Laravel", "Vue.js", "TypeScript", "PostgreSQL"],
+    link: "https://github.com/Rahmadani05/Aplikasi-Task-Project-Tracker",
+    color: "from-yellow-500 to-orange-500",
+    image: tracker,
+  },
+  {
+    id: "leave-management",
+    category: "personal",
+    title: "Leave Request Management",
+    desc: "This app allows employees (users) to submit leave requests, and administrators to approve or deny those requests. The system also automatically manages remaining leave balances",
+    tech: ["Laravel", "Vue.js", "TypeScript", "PostgreSQL", "Docker"],
+    link: "https://github.com/Rahmadani05/Aplikasi-Leave-Request-Management",
+    color: "from-yellow-500 to-orange-500",
+    image: leavehub,
+  },
+];
