@@ -76,7 +76,7 @@ const App = () => {
   const experiences = [
     {
       company: "Energeek",
-      role: "Fullstack Web Programmer",
+      role: "Fullstack Programmer",
       type: "Fulltime",
       period: "March 2026 - Now",
       location: "Surabaya, Jawa Timur, Indonesia",
@@ -462,15 +462,6 @@ const App = () => {
               >
                 <Download size={20} /> Download CV
               </a>
-              <a
-                href="#contact"
-                className={`px-8 py-4 border-2 rounded-xl font-bold transition flex items-center justify-center ${isDarkMode
-                    ? "bg-transparent border-slate-700 text-slate-300 hover:border-slate-500 hover:bg-slate-800"
-                    : "bg-white border-slate-200 text-slate-700 hover:border-slate-300 hover:bg-slate-50"
-                  }`}
-              >
-                Call Me
-              </a>
             </div>
 
             {/* Skeleton loader decoration */}
@@ -525,7 +516,7 @@ const App = () => {
             <p
               className={`mt-4 ${isDarkMode ? "text-slate-400" : "text-slate-500"}`}
             >
-              Daftar teknologi dan tools yang saya kuasai
+              Tech stack I'm proficient in
             </p>
           </div>
 
@@ -610,7 +601,7 @@ const App = () => {
                   isDarkMode ? "text-slate-400" : "text-slate-600"
                 }`}
               >
-                Kumpulan proyek enterprise skala instansi dan aplikasi unggulan pilihan.
+                A collection of agency-scale enterprise projects and selected flagship applications
               </p>
             </div>
           </div>
