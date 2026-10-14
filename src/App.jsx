@@ -516,7 +516,7 @@ const App = () => {
             <p
               className={`mt-4 ${isDarkMode ? "text-slate-400" : "text-slate-500"}`}
             >
-              Tech stack I'm proficient in
+              The tech stack I use
             </p>
           </div>
 
