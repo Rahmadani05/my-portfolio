@@ -26,6 +26,17 @@ export const projects = [
     isLogo: true,
   },
   {
+    id: "buku-tamu",
+    category: "enterprise",
+    title: "Bagian Umum - Buku Tamu Digital",
+    desc: "A digital guestbook and visitor management information system developed for the General Affairs Division (Bagian Umum) of the Surabaya City Government. It features automated guest registration, GPS geolocation radius validation for lobby and garden areas, QR/barcode-based visit verification, officer shift management, visitor satisfaction surveys (IKM), dynamic visit scheduling via interactive calendar, and comprehensive statistical reporting with Excel export.",
+    tech: ["Laravel 9", "Vue 3", "MySQL", "Vuex", "Vite", "FullCalendar", "RESTful API", "ApexCharts", "QR Scanner", "DataTables"],
+    link: "",
+    color: "from-sky-600 to-blue-700",
+    image: sikapBijak,
+    isLogo: true,
+  },
+  {
     id: "nadi-dinkop",
     category: "enterprise",
     title: "Dinkop UMKM (NADI) - Dashboard & Admin Panel",
